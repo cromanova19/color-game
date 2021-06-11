@@ -6,12 +6,12 @@ import keyboard
 from game import Game
 r = lambda: random.randint(0,255)
 rp = lambda: random.randint(0,100)
-dims = 10
+dims = 3
 #dims = input("Enter the dimension you would like")
 
 def main():
     color_game = Game(dims)
-    win = color_game.startGame()
-    win.getMouse()
+    done = color_game.startGame()
+    color_game.playGame(dims, done)
 
 main()

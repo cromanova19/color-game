@@ -6,7 +6,7 @@ import math
 import random
 import keyboard
 r = lambda: random.randint(0,255)
-rp = lambda: random.randint(0,255)
+rp = lambda: random.randint(100,200)
 xd = 750
 yd = 750
 win = GraphWin("Game", xd, yd)
@@ -27,7 +27,7 @@ class Game:
         utils = Utils()
         tsq = dims**2
         print('Starting the Game')
-        self.gen_old()
+        self.gen_new()
         for a in range(tsq):
             posx = a%dims
             posy = math.floor(a/dims)
@@ -97,14 +97,20 @@ class Game:
 
         for a in range (3):
             ra = rp()
-            redVals.append((blueVals[0]+ra)%255)
-            #redVals.append(redVals[0]+ra*(math.floor(ra+redVals[0])/255)*-1)
+            if ra+redVals[a]>255:
+                redVals.append(abs(ra-redVals[a]))
+            elif True:
+                redVals.append(ra+redVals[a])
             ra = rp()
-            greenVals.append((blueVals[0]+ra)%255)
-            #greenVals.append(greenVals[0]+ra*(math.floor(ra+greenVals[0])/255)*-1)
+            if ra+greenVals[a]>255:
+                greenVals.append(abs(ra-greenVals[a]))
+            elif True:
+                greenVals.append(ra+greenVals[a])
             ra = rp()
-            blueVals.append((blueVals[0]+ra)%255)
-            #blueVals.append(blueVals[0]+ra*(math.floor(ra+blueVals[0])/255)*-1)
+            if ra+blueVals[a]>255:
+                blueVals.append(abs(ra-blueVals[a]))
+            elif True:
+                blueVals.append(ra+blueVals[a])
         for a in range (4):
             color = '#%02X%02X%02X' % (int(redVals[a]), int(greenVals[a]), int(blueVals[a]))
             print (str(color))

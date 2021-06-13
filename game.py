@@ -69,7 +69,7 @@ class Game:
             Swap.generate()
             if colors==done:
                 print ("You Win!")
-            elif 1>0:
+            elif True:
                 print ("Not done yet!")
             
     

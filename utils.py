@@ -1,5 +1,6 @@
 import math
 import random
+from graphics import *
 
 class Utils:
     def __init__(self):
@@ -46,5 +47,26 @@ class Utils:
             insert = newColors[0]
             list.insert(corner[a], insert)
             del newColors [0]
+        return corner
+
+    def squareNumber(self, scale, point, dims):
+        Os = []
+        XP1 = math.floor(point.getX()/scale)
+        YP1 = math.floor(point.getY()/scale)
+        Os.append(YP1 * dims + XP1%dims)
+        Os.append(Point(XP1 * scale, YP1 * scale))
+        Os.append(Point((XP1+1) * scale, (YP1+1) * scale))
+        return Os
+
         
+    def highlightSquare(self, point1, point2, number, win):
+        square = Rectangle(point1, point2)
+        square.setOutline("red")
+        square.setWidth(1)
+        square.draw(win)
+
+        
+
+    def mValues (self, object):
+        return object
 

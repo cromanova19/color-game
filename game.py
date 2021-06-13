@@ -27,7 +27,7 @@ class Game:
         utils = Utils()
         tsq = dims**2
         print('Starting the Game')
-        self.gen_new()
+        self.gen_old()
         for a in range(tsq):
             posx = a%dims
             posy = math.floor(a/dims)
@@ -49,20 +49,19 @@ class Game:
 
     def playGame(self, dims, done):
         while not(colors==done):
+            utils = Utils()
             scale = xd/dims
             P1 = win.getMouse()
+            Ps = utils.squareNumber(scale, P1, dims)
+            V1 = Ps[0]
+            Square1 = Ps[1]
+            Square11 = Ps[2]
+            utils.highlightSquare(Square1, Square11, V1, win)
             P2 = win.getMouse()
-            XP1 = math.floor(P1.getX()/scale)
-            XP2 = math.floor(P2.getX()/scale)
-            YP1 = math.floor(P1.getY()/scale)
-            YP2 = math.floor(P2.getY()/scale)
-            V1 = YP1 * dims + XP1%dims
-            V2 = YP2 * dims + XP2%dims
-            Square1 = Point(XP1 * scale, YP1 * scale)
-            Square11 = Point((XP1+1) * scale, (YP1+1) * scale)
-            Square2 = Point(XP2 * scale, YP2 * scale)
-            Square22 = Point((XP2+1) * scale, (YP2+1) * scale)
-            utils = Utils()
+            Ps = utils.squareNumber(scale, P2, dims)
+            V2 = Ps[0]
+            Square2 = Ps[1]
+            Square22 = Ps[2]
             utils.listSwap(colors, V1, V2)
             Swap = Square(Square1, Square11, colors[V1], win)
             Swap.generate()

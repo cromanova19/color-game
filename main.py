@@ -6,7 +6,7 @@ import keyboard
 from game import Game
 r = lambda: random.randint(0,255)
 rp = lambda: random.randint(0,100)
-dims = 5
+dims = 100
 #dims = input("Enter the dimension you would like")
 
 def main():

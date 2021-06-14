@@ -7,7 +7,7 @@ import random
 import keyboard
 r = lambda: random.randint(0,255)
 rp = lambda: random.randint(100,200)
-xd = 750
+xd = 1000
 yd = 750
 win = GraphWin("Game", xd, yd)
 redVals = []
@@ -27,7 +27,7 @@ class Game:
         utils = Utils()
         tsq = dims**2
         print('Starting the Game')
-        self.gen_new()
+        self.gen_old()
         for a in range(tsq):
             posx = a%dims
             posy = math.floor(a/dims)

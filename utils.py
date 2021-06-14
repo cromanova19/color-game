@@ -31,11 +31,9 @@ class Utils:
         list[pos1], list[pos2] = list[pos2], list[pos1]
         return list
 
-    def Shuffle(self, list, dims):
-        corner = []
+    def Shuffle(self, list, corner):
         newColors = []
-        for a in range(4):
-            corner.append((a%2)*(dims-1) + math.floor(a/2)*dims*(dims-1))
+        for a in range(len(corner)):
             save = list[corner[a]]
             newColors.append(save)
         del list[corner[3]]
@@ -49,13 +47,15 @@ class Utils:
             del newColors [0]
         return corner
 
-    def squareNumber(self, scale, point, dims):
+    def squareNumber(self, scale, point, dims, corners):
         Os = []
-        XP1 = math.floor(point.getX()/scale)
-        YP1 = math.floor(point.getY()/scale)
-        Os.append(YP1 * dims + XP1%dims)
-        Os.append(Point(XP1 * scale, YP1 * scale))
-        Os.append(Point((XP1+1) * scale, (YP1+1) * scale))
+        XP = math.floor(point.getX()/scale)
+        YP = math.floor(point.getY()/scale)
+        pos = (YP * dims + XP%dims)
+        if pos not in corners :
+            Os.append(pos)
+            Os.append(Point(XP * scale, YP * scale))
+            Os.append(Point((XP+1) * scale, (YP+1) * scale))
         return Os
 
         
@@ -69,4 +69,24 @@ class Utils:
 
     def mValues (self, object):
         return object
+
+    def unHighlight (self, point1, point2, color, win):
+        square = Rectangle(point1, point2)
+        square.setFill(color)
+        square.draw(win)
+
+    def genCorners (self, dims):
+        corners = [0, dims-1, dims*(dims-1), dims**2-1]
+        return corners
+    
+    def genDots (self, corner, dims, scale, win):
+        for a in range(len(corner)):
+            posx = corner[a]%dims
+            posy = math.floor(corner[a]/dims)
+            color = "black"
+            xp = self.avg(posx*scale, (posx+1)*scale)
+            yp = self.avg(posy*scale, (posy+1)*scale)
+            Cir = Circle(Point(xp, yp) , 5)
+            Cir.setFill(color)
+            Cir.draw(win)
 

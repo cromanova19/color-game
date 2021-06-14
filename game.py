@@ -7,7 +7,7 @@ import random
 import keyboard
 r = lambda: random.randint(0,255)
 rp = lambda: random.randint(100,200)
-xd = 1000
+xd = 750
 yd = 750
 win = GraphWin("Game", xd, yd)
 redVals = []
@@ -20,8 +20,11 @@ done = []
 class Game:
     def __init__(self, dims):
         self.dims = dims
+        utils = Utils()
+        self.corners = utils.genCorners(dims)
 
     def startGame(self):
+        corner = self.corners
         dims = self.dims
         scale = xd/dims
         utils = Utils()
@@ -35,38 +38,39 @@ class Game:
             Sq = Square(Point(posx*scale, posy*scale), Point((posx+1)*scale, (posy+1)*scale), color, win)
             Sq.generate()
             colors.append(color)
+        utils.genDots(corner, dims, scale, win)
 
         done = list.copy(colors)
         time.sleep(2)
-        utils.Shuffle(colors, dims)
+        utils.Shuffle(colors, corner)
         for a in range (tsq):
-            posx = a%(dims)
-            posy = math.floor(a/dims)
-            color = colors[a]
-            Sq = Square(Point(posx*scale, posy*scale), Point((posx+1)*scale, (posy+1)*scale), color, win)
-            Sq.generate()
+            if a not in corner:
+                posx = a%(dims)
+                posy = math.floor(a/dims)
+                color = colors[a]
+                Sq = Square(Point(posx*scale, posy*scale), Point((posx+1)*scale, (posy+1)*scale), color, win)
+                Sq.generate()
         return done
 
     def playGame(self, dims, done):
         while not(colors==done):
+            corners = self.corners
             utils = Utils()
             scale = xd/dims
             P1 = win.getMouse()
-            Ps = utils.squareNumber(scale, P1, dims)
-            V1 = Ps[0]
-            Square1 = Ps[1]
-            Square11 = Ps[2]
-            utils.highlightSquare(Square1, Square11, V1, win)
-            P2 = win.getMouse()
-            Ps = utils.squareNumber(scale, P2, dims)
-            V2 = Ps[0]
-            Square2 = Ps[1]
-            Square22 = Ps[2]
-            utils.listSwap(colors, V1, V2)
-            Swap = Square(Square1, Square11, colors[V1], win)
-            Swap.generate()
-            Swap = Square(Square2, Square22, colors[V2], win)
-            Swap.generate()
+            Ps = utils.squareNumber(scale, P1, dims, corners)
+            if len(Ps) != 0:
+                utils.highlightSquare(Ps[1], Ps[2], Ps[0], win)
+                P2 = win.getMouse()
+                Qs = utils.squareNumber(scale, P2, dims, corners)
+                if len(Qs) != 0:
+                    utils.listSwap(colors, Ps[0], Qs[0])
+                    Swap = Square(Ps[1], Ps[2], colors[Ps[0]], win)
+                    Swap.generate()
+                    Swap = Square(Qs[1], Qs[2], colors[Qs[0]], win)
+                    Swap.generate()
+                elif True:
+                    utils.unHighlight(Ps[1], Ps[2], colors[Ps[0]], win)
             if colors==done:
                 print ("You Win!")
             elif True:

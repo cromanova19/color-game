@@ -1,6 +1,8 @@
+from utils import Utils
 from graphics import *
 import random
 import keyboard
+import math
 r = lambda: random.randint(0,255)
 
 class Square :
@@ -14,11 +16,3 @@ class Square :
         sqs = Rectangle(self.P1, self.P2)
         sqs.setFill(self.color)
         sqs.draw(self.win)
-
-    """def shuffle(self):
-        sqs = Rectangle(self.P1, self.P2)
-        sqs.setFill(self.color)
-        sqs.draw(self.win)"""
-
-    
-
